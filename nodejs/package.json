@@ -1,0 +1,10 @@
+{
+  "name": "node-network-rng",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Network RNG client",
+  "author": "Nicos Panayides <nicosp@gmail.com>",
+  "dependencies": {
+     "commander": "2.0.0"
+  }
+}

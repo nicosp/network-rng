@@ -1,0 +1,82 @@
+.\"                                      Hey, EMACS: -*- nroff -*-
+.\" (C) Copyright 2013 Nicos Panayides <nicosp@gmail.com>,
+.\"
+.TH QUANTISUSB-RNGD 8 "September 29, 2013"
+.SH NAME
+quantisusb-rngd \- network daemon for Quantis USB
+.SH SYNOPSIS
+.B quantisusb-rngd
+.RI [ options ]
+.SH DESCRIPTION
+.B quantisusb-rngd
+sends random bytes to any number of connected TCP clients from
+all Quantis USB devices on the system. Devices may be connected
+and disconnected while the daemon is running and all devices are
+used to increase throughput.
+.PP
+.SH OPTIONS
+This program follows the usual command line syntax,
+with options starting with a dash (`-').
+A summary of options is included below.
+.TP
+.B \-4
+Listens to IPv4 address only.
+Without this option the daemon listens for both.
+.TP
+.B \-6
+Listens to IPv6 address only.
+Without this option the daemon listens for both.
+.TP
+.B \-h
+Show summary of options.
+.TP
+\fB\-l\fR \fIlevel\fR
+Log Verbosity. (0 Errors, 1 Warnings, 2 Info, 3 Debug) (Default: 2)
+.TP
+\fB\-p\fR \fIport\fR
+Port to listen to (Default: 4545)
+.TP
+\fB\-o\fR \fIfile\fR
+Write all random numbers to this file. Used for testing.
+.TP
+.B \-v
+Show version of program.
+.PP
+.SH PROTOCOL
+The protocol is TCP
+All integers are in network byte order (big endian).
+Clients should send requests at least once every 20s.
+
+.SS REQUEST
+.TS
+l l l l.
+Offset	Size	Type	Description
+_
+0	4	uint32_t	Random bytes requested. Can be 0.
+.TE
+
+.SS RESPONSE
+.TS
+l l l l.
+Offset	Size	Type	Description
+_
+0	4	uint32_t	Random bytes following. Can be 0.
+4	n	bytes	Random bytes.
+.TE
+
+Please note that the number of server responses may different than the number of requests.
+The only guarantee is that the server will never exceed the sum of all requested random bytes.
+
+The server does not enforce any kind of response timeout and requests never
+fail. In case a client has over 2G of pending random data the server will close the connection.
+
+The server will always send the data in the order it was received from the hardware.
+This is used for testing and to ensure that there is absolutely no difference between
+receiving data from the RNG directly or through the server.
+.PP
+The protocol does not support encryption but it is possible to use stunnel or another SSL proxy
+to get encryption.
+
+.SH SEE ALSO
+.LP
+.BR "stunnel(8)"
