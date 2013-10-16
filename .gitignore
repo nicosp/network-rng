@@ -1,0 +1,8 @@
+*~
+*.o
+*.gcda
+*.gcno
+*.gcov
+rngd/quantisusb-reader
+rngd/quantisusb-rngd
+nodejs/node_modules
