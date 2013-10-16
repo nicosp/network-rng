@@ -25,7 +25,7 @@
 */
 
 /*
-
+* Asynchronous library for Quantis USB HW RNGs.
 */
 
 #include <errno.h>

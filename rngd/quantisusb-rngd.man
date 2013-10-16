@@ -74,9 +74,10 @@ The server will always send the data in the order it was received from the hardw
 This is used for testing and to ensure that there is absolutely no difference between
 receiving data from the RNG directly or through the server.
 .PP
-The protocol does not support encryption but it is possible to use stunnel or another SSL proxy
+The protocol does not support encryption but it is possible to use stunnel(8) or another SSL proxy
 to get encryption.
 
 .SH SEE ALSO
 .LP
 .BR "stunnel(8)"
+

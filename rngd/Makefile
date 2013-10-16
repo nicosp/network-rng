@@ -1,11 +1,15 @@
 #!/usr/bin/make -f
 # Makefile for libquantisusb
 # Requirements:
-# - GNU Make (Might work with other makes but not tested at all)
+# - GNU Make (Tested with 3.81)
 # - pkg-config (Tested with 0.26)
 
 prefix:=/usr/local
 bindir:=$(prefix)/bin
+
+# Build type
+# coverage
+BUILD_TYPE:=normal
 
 PKG_CONFIG:=pkg-config
 CC:=gcc
@@ -14,11 +18,14 @@ RM:=rm -f
 PKG_CONFIG_LIBS:=libusb-1.0
 
 INCS:=$(shell $(PKG_CONFIG) --cflags $(PKG_CONFIG_LIBS))
-CFLAGS:=-O2 -g -std=c99 -Wall -Wconversion -Wformat-security -Werror -fstrict-aliasing -fPIE -fstack-protector-all -fvisibility=hidden $(INCS)
-# -fprofile-arcs -ftest-coverage 
+CFLAGS:=-O2 -g -std=c99 -pedantic -Wall -Wconversion -Wformat-security -Werror -fstrict-aliasing -fPIE -fstack-protector-all -fvisibility=hidden $(INCS)
 LDFLAGS:=-z relro -z now -pie 
 LIBS:=$(shell $(PKG_CONFIG) --libs $(PKG_CONFIG_LIBS)) -lm
-# -lgcov
+
+ifeq ($(BUILD_TYPE),coverage)
+  CFLAGS += -fprofile-arcs -ftest-coverage
+  LIBS += -lgcov
+endif
 
 LIB_HEADERS:=quantisusb.h version.h
 LIB_SRCS:= quantisusb.c

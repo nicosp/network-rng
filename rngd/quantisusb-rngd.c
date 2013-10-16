@@ -508,7 +508,7 @@ int main(int argc, char **argv)
 	const char *outfile = NULL;
 
 	/* Option handling */
-	while ((opt = getopt(argc, argv, "46hb:l:o:p:v")) != -1) {
+	while ((opt = getopt(argc, argv, "46b:hl:o:p:v")) != -1) {
         	switch (opt) {
 			case '4':
 				ipv4_enabled = 1;
