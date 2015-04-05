@@ -373,6 +373,7 @@ static void on_device(QuantisUSBDevice *device, int present)
 	static const char* status[] = {"Closed", "Opened"};
 
 	if (quantis_usb_get_serial_number(device, sn, 128)) {
+		syslog(LOG_MAKEPRI(LOG_DAEMON, LOG_ERR), "Unable to get Device serial number: %s", strerror(errno));
 		syslog(LOG_MAKEPRI(LOG_DAEMON, LOG_INFO), "%s USB RNG device", status[!!present]);
 	} else {
 		syslog(LOG_MAKEPRI(LOG_DAEMON, LOG_INFO), "%s USB RNG device. (Serial Number: %s)", status[!!present], sn);

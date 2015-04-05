@@ -56,7 +56,8 @@ DataBuffer *data_buf_create(size_t capacity)
 		return NULL;
 	}
 
-	/* Not required */
+	/* Zero all buffers to avoid exposing random memory in data buffers
+        */
 	memset(data_buf->buffer, 0, capacity);
 
 	data_buf->capacity = capacity;
