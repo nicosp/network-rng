@@ -3,6 +3,8 @@
 *.gcda
 *.gcno
 *.gcov
+*.plist
 rngd/quantisusb-reader
 rngd/quantisusb-rngd
+rngd/doc/html
 nodejs/node_modules
