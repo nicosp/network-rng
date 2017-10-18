@@ -19,7 +19,7 @@ PKG_CONFIG_LIBS:=libusb-1.0
 
 INCS:=$(shell $(PKG_CONFIG) --cflags $(PKG_CONFIG_LIBS))
 CFLAGS:=-O2 -g -std=c99 -pedantic -Wall -Wconversion -Wformat-security -Werror -fstrict-aliasing -fPIE -fstack-protector-all -fvisibility=hidden $(INCS)
-LDFLAGS:=-z relro -z now -pie 
+LDFLAGS:=-z relro -z now -pie
 LIBS:=$(shell $(PKG_CONFIG) --libs $(PKG_CONFIG_LIBS)) -lm
 
 ifeq ($(BUILD_TYPE),coverage)
@@ -68,4 +68,4 @@ install: quantisusb-rngd quantisusb-reader
 	$(CC) $(CFLAGS) -c $<
 
 %.plist: %.c
-	clang --analyze $(INCS) $< 
+	clang --analyze $(INCS) $<

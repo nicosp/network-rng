@@ -41,7 +41,7 @@ process.on('SIGINT', function() {
 });
 
 function playRound() {
-    generator.getSeedAsync(new Buffer(64), 
+    generator.getSeedAsync(new Buffer(64),
         function(seed) {
             console.log('Seed of size ' + seed.length + ' bytes received from seed generator. Available: ' + generator.getSeedAvailable());
 

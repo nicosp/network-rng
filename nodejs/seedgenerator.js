@@ -79,7 +79,7 @@ SeedBuffer.prototype.read = function(buf)
   	} else {
 		var size_1 = capacity - this.beginIndex;
 		var size_2 = bytesToRead - size_1;
-		
+
 		this.buffer.copy(buf, 0, this.beginIndex, this.beginIndex + size_1);
 		this.buffer.copy(buf, size_1, 0, size_2);
 		this.beginIndex = size_2;
@@ -194,7 +194,7 @@ SeedGenerator.prototype.connect = function() {
 				} else {
 					endOffset = chunk.length;
 				}
-			
+
 				seedSize = endOffset - bytesConsumed;
 				self.bytesPending -= seedSize;
 
@@ -305,14 +305,14 @@ SeedGenerator.prototype.connect = function() {
 };
 
 SeedGenerator.prototype.sendIdle = function() {
-	var buf = new Buffer(4);	
+	var buf = new Buffer(4);
 	buf.writeUInt32BE(0, 0);
 	this.client.write(buf);
 };
 
 SeedGenerator.prototype.fill = function() {
 	var entropyMissing = this.seedBuf.getSpace() - (this.seedPending + this.bytesPending);
-	
+
 	/* Don't ask the remote source for little amounts of entropy but wait until more is needed */
 	if (entropyMissing < 4096 && entropyMissing < this.seedBuf.capacity()) {
 		return;
@@ -320,7 +320,7 @@ SeedGenerator.prototype.fill = function() {
 
 	if (this.connected === true) {
 		//console.log('Requesting ' + entropyMissing + ' bytes of entropy from server');
-		var buf = new Buffer(4);	
+		var buf = new Buffer(4);
 		buf.writeUInt32BE(entropyMissing, 0);
 		this.client.write(buf);
 		this.seedPending += entropyMissing;
@@ -387,7 +387,7 @@ SeedGenerator.prototype.getSeedAsync = function(buffer, callback, errorCallback,
 			return;
 		}
 
-		var timeoutTimer = null;		
+		var timeoutTimer = null;
 		if (typeof errorCallback !== 'undefined') {
 			timeoutTimer = setTimeout(errorCallback, timeout);
 		}
